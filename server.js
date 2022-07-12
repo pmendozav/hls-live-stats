@@ -38,6 +38,20 @@ app.post('/*', function (req, res) {
   res.status(200).send({info});
 })
 
+app.get('/stats/:id', function (req, res) {
+  const key = `https://${req.params.id}`;
+  
+  let resp = JSON.parse(JSON.stringify(sourcesInfo[key] || {}));
+  
+  delete resp['logger'];
+  delete resp['id'];
+
+  const stats = resp.stats;
+  resp.stats.adsRate = Math.floor(100 * ((stats.contentDuration > 0) ? (stats.adsDuration / stats.contentDuration) : 0));
+  
+  res.status(200).json(resp);
+})
+
 app.get('/stats', function (req, res) {
   // Object.keys(sourcesInfo).map(k => {
   //   if (sourcesInfo[k].isDead) delete sourcesInfo[k];
