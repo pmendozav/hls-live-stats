@@ -47,7 +47,9 @@ app.get('/stats/:id', function (req, res) {
   delete resp['id'];
 
   const stats = resp.stats;
-  resp.stats.adsRate = Math.floor(100 * ((stats.contentDuration > 0) ? (stats.adsDuration / stats.contentDuration) : 0));
+  const adsRatio = Math.floor(100 * ((stats.contentDuration > 0) ? (stats.adsDuration / stats.contentDuration) : 0));
+
+  resp.stats.AdsDescription = `${adsRatio}% (${stats.adMarkers} markers found in ${stats.contentDuration} seconds)`
   
   res.status(200).json(resp);
 })
