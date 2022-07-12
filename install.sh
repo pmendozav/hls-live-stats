@@ -36,7 +36,8 @@ echo 'hlsreport $FILE_NAME.json' >> hs-live-tester
 echo 'open $FILE_NAME.html' >> hs-live-tester
 echo '' >> hs-live-tester
 
-echo 'urlencode=$(node --eval "console.log(encodeURIComponent('\$URL'))")' >> hs-live-tester
+echo "URL_2=\"'\$3'\"" >> hs-live-tester
+echo 'urlencode=$(node --eval "console.log(encodeURIComponent($URL_2))")' >> hs-live-tester
 echo 'open "http://localhost:3000/stats/$urlencode"' >> hs-live-tester
 
 chmod 777 hs-live-tester
