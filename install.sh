@@ -1,6 +1,6 @@
 cd $HS_SCRIPTS/../
-# rm -rf ccextractor
-# git clone https://github.com/CCExtractor/ccextractor.git
+rm -rf ccextractor
+git clone https://github.com/CCExtractor/ccextractor.git
 
 cd $HS_SCRIPTS/../ccextractor/mac
 ./build.command
