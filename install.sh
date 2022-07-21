@@ -12,7 +12,7 @@ rm -rf hls-live-stats
 git clone https://github.com/pmendozav/hls-live-stats.git
 
 cd hls-live-stats
-npm ci
+npm install
 
 OUTPUT=$(pwd)
 
