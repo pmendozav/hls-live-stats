@@ -22,31 +22,17 @@ cd ../bin
 echo '#!/bin/sh' > hs-live-tester
 echo '' >> hs-live-tester
 
-echo '# init server' >> hs-live-tester
-echo 'kill -9 $(lsof -ti:3000)' >>  hs-live-tester
-printf "node %s/server.js &\n" $OUTPUT >> hs-live-tester
+echo 'DATA_SOURCE="$1"' >> hs-live-tester
+echo 'TARGET="$2"' >> hs-live-tester
+echo 'TIME="$3"' >> hs-live-tester
 echo '' >> hs-live-tester
 
-echo 'TIME="$1"' >> hs-live-tester
-echo 'FILE_NAME="$2"' >> hs-live-tester
-echo 'URL="$3"' >> hs-live-tester
+# echo 'node $HS_SCRIPTS/../mainScript.js $DATA_SOURCE $TARGET $TIME' >> hs-live-tester
+
+printf "node %s/../hls-live-stats/mainScript.js \$DATA_SOURCE \$TARGET \$TIME\n" $HS_SCRIPTS >> hs-live-tester
+
 echo '' >> hs-live-tester
 
-echo '# register source' >> hs-live-tester
-echo 'sleep 3' >> hs-live-tester
-echo 'curl -s "http://localhost:3000/$URL" >> log' >> hs-live-tester
-echo '' >> hs-live-tester
-
-echo 'sleep 2' >> hs-live-tester
-echo '' >> hs-live-tester
-
-echo 'mediastreamvalidator -t $TIME -O $FILE_NAME.json https://$URL' >> hs-live-tester
-echo 'hlsreport $FILE_NAME.json' >> hs-live-tester
-echo 'open $FILE_NAME.html' >> hs-live-tester
-echo '' >> hs-live-tester
-
-echo "URL_2=\"'\$3'\"" >> hs-live-tester
-echo 'urlencode=$(node --eval "console.log(encodeURIComponent($URL_2))")' >> hs-live-tester
-echo 'open "http://localhost:3000/stats/$urlencode"' >> hs-live-tester
+echo 'open "http://localhost:3000/stats"' >> hs-live-tester
 
 chmod 777 hs-live-tester

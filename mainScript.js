@@ -15,6 +15,12 @@ const pause = timeout => {
     });
 }
 
+const getResults = async () => {
+    let command = `curl -s "http://localhost:3000/stats" > ${target}/stats.json`;
+    await _exec(command);
+}
+
+
 async function run(sources, target, timeout) {
     try {
         // kill any process in port 3000
@@ -43,10 +49,7 @@ async function run(sources, target, timeout) {
         await _exec(command);
     }
 
-    setInterval(async () => {
-        let command = `curl -s "http://localhost:3000/stats" > ${target}/stats.json`;
-        await _exec(command);
-    }, 1000)
+    setInterval(getResults, 1000)
 
     let count = 0;
     let reportResults = '';
@@ -55,14 +58,16 @@ async function run(sources, target, timeout) {
         let url = source[1];
         url = url.replace('http://', 'https://');
 
-        const child = fork('scripts/mediastreamvalidator.js', [timeout, `${target}/${id}`, url]);
+        const child = fork(path.resolve(__dirname, 'scripts/mediastreamvalidator.js'), [timeout, `${target}/${id}`, url]);
     
-        child.on("close", function (code) {
-            fork('scripts/hlsreport.js', [`${target}/${id}.json`]);
+        child.on("close", async function (code) {
+            fork(path.resolve(__dirname, 'scripts/hlsreport.js'), [`${target}/${id}.json`]);
             reportResults += `${target}/${id}.json.html, `;
             count++;
             if (count === sources.length) {
                 console.log(`all the result are located on ${target}\n- hls reports: ${reportResults}\n- server logs: ${target}/stats.json [http://localhost:3000/stats]`)
+
+                await getResults();
                 process.exit(1);
             }
         });
@@ -73,7 +78,7 @@ const dataSource = process.argv[2];
 const target = process.argv[3];
 const time = process.argv[4];
 
-const filepath = path.resolve(__dirname, dataSource);
+const filepath = dataSource;
 (async () => {
     const data = await fs.promises.readFile(filepath, 'utf8');
     let sources = [];
