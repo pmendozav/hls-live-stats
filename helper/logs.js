@@ -2,7 +2,7 @@ const log4js = require('log4js');
 const APP = require('../constants');
 
 const useDebugLevel = false; // APP.ENVIRONMENT === 'debug';
-const log2file = true; // APP.LOGS_TO_FILE;
+const log2file = false; // APP.LOGS_TO_FILE;
 
 log4js.configure({
     appenders: { 
