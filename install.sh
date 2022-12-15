@@ -29,7 +29,7 @@ echo '' >> hs-live-tester
 
 # echo 'node $HS_SCRIPTS/../mainScript.js $DATA_SOURCE $TARGET $TIME' >> hs-live-tester
 
-printf "node %s/../hls-live-stats/mainScript.js \$DATA_SOURCE \$TARGET \$TIME\n" $HS_SCRIPTS >> hs-live-tester
+printf "node %s/hls-live-stats/mainScript.js \$DATA_SOURCE \$TARGET \$TIME\n" $HS_SCRIPTS >> hs-live-tester
 
 echo '' >> hs-live-tester
 
