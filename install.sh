@@ -1,13 +1,13 @@
-cd $HS_SCRIPTS/../
+cd $HS_SCRIPTS
 rm -rf ccextractor
 git clone https://github.com/CCExtractor/ccextractor.git
 
-cd $HS_SCRIPTS/../ccextractor/mac
+cd $HS_SCRIPTS/ccextractor/mac
 ./build.command
 
 cp ./ccextractor $HS_SCRIPTS/ccextractor
 
-cd $HS_SCRIPTS/../
+cd $HS_SCRIPTS
 rm -rf hls-live-stats
 git clone https://github.com/pmendozav/hls-live-stats.git
 

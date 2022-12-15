@@ -8,8 +8,8 @@
         - export PATH=$HS_SCRIPTS:$PATH
     - For instance: /Users/me/Documents/scripts/bin (folders structure should exist)
 - run: ./install.sh
-    - folder added: $HS_SCRIPTS/../hls-live-stats
-    - command added: $HS_SCRIPTS/hs-live-tester
+    - folder added: $HS_SCRIPTS/hls-live-stats
+    - command added: $HS_SCRIPTS/bin/hs-live-tester
 
 #### How is it used?
 Run 

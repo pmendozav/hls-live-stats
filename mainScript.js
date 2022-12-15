@@ -35,7 +35,14 @@ async function run(sources, target, timeout) {
     }
 
     // start server
-    spawn('node', ['$HS_SCRIPTS/../hls-live-stats/server.js'], {detached: true, stdio: [ 'ignore']});
+    try {
+        let hsScriptsPath = await _exec(`echo $HS_SCRIPTS`);
+        hsScriptsPath = hsScriptsPath.stdout.replace(/[\n\t\r]/g,"");
+        const serverPath = `${hsScriptsPath}/hls-live-stats/server.js`
+        spawn('node', [serverPath], {detached: true, stdio: [ 'ignore']});
+    } catch (e) {
+        console.log(e);
+    }
 
     await pause(1000);
 
