@@ -35,7 +35,7 @@ async function run(sources, target, timeout) {
     }
 
     // start server
-    spawn('node', ['/Users/haystack/Documents/scripts/hls-live-stats/server.js'], {detached: true, stdio: [ 'ignore']});
+    spawn('node', ['$HS_SCRIPTS/../hls-live-stats/server.js'], {detached: true, stdio: [ 'ignore']});
 
     await pause(1000);
 
