@@ -16,8 +16,12 @@ npm install
 
 OUTPUT=$(pwd)
 
-cd ../bin
+if ! [ -d "../bin" ];
+then
+	mkdir ../bin
+fi
 
+cd ../bin
 
 echo '#!/bin/sh' > hs-live-tester
 echo '' >> hs-live-tester
