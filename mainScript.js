@@ -16,6 +16,8 @@ const pause = timeout => {
 }
 
 const getResults = async () => {
+    const cmd = `curl -s "http://localhost:3000/stats" > ${target}/stats.json`;
+    console.log(`\t>>${new Date()}: CMD=${cmd}`)
     let command = `curl -s "http://localhost:3000/stats" > ${target}/stats.json`;
     await _exec(command);
 }
@@ -50,6 +52,7 @@ async function run(sources, target, timeout) {
     for (source of sources) {
         let url = source[1];
         if (!url) continue;
+
         url = url.replace('http://', '');
         url = url.replace('https://', '');
         
@@ -65,6 +68,7 @@ async function run(sources, target, timeout) {
         let id = source[0];
         let url = source[1];
         if (!url) continue;
+        
         url = url.replace('http://', 'https://');
 
         const child = fork(path.resolve(__dirname, 'scripts/mediastreamvalidator.js'), [timeout, `${target}/${id}`, url]);
