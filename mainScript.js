@@ -15,9 +15,9 @@ const pause = timeout => {
     });
 }
 
-const getResults = async () => {
+const getResults = async (debug = true) => {
     const cmd = `curl -s "http://localhost:3000/stats" > ${target}/stats.json`;
-    console.log(`\t>>${new Date()}: CMD=${cmd}`)
+    if (debug) console.log(`\t>>${new Date()}: CMD=${cmd}`)
     let command = `curl -s "http://localhost:3000/stats" > ${target}/stats.json`;
     await _exec(command);
 }
@@ -80,7 +80,8 @@ async function run(sources, target, timeout) {
             if (count === sources.length) {
                 console.log(`all the result are located on ${target}\n- hls reports: ${reportResults}\n- server logs: ${target}/stats.json [http://localhost:3000/stats]`)
 
-                await getResults();
+                await getResults(false);
+                console.log(`CMD=process.exit(1)`);
                 process.exit(1);
             }
         });
