@@ -78,10 +78,10 @@ async function run(sources, target, timeout) {
             reportResults += `${target}/${id}.json.html, `;
             count++;
             if (count === sources.length) {
-                console.log(`all the result are located on ${target}\n- hls reports: ${reportResults}\n- server logs: ${target}/stats.json [http://localhost:3000/stats]`)
+                console.log(`${new Date()}: all the result are located on ${target}\n- hls reports: ${reportResults}\n- server logs: ${target}/stats.json [http://localhost:3000/stats]`)
 
                 await getResults(false);
-                console.log(`CMD=process.exit(1)`);
+                console.log(`${new Date()}: CMD=process.exit(1)`);
                 process.exit(1);
             }
         });
