@@ -1,17 +1,18 @@
+rm -rf $HS_SCRIPTS/hls-live-stats
+# to use github
+git clone https://github.com/pmendozav/hls-live-stats.git
+mv ./hls-live-stats $HS_SCRIPTS/hls-live-stats
+# to local test
+# cp -rf ./ $HS_SCRIPTS/hls-live-stats
+
 cd $HS_SCRIPTS
 rm -rf ccextractor
 git clone https://github.com/CCExtractor/ccextractor.git
-
 cd $HS_SCRIPTS/ccextractor/mac
 ./build.command
 
-cp ./ccextractor $HS_SCRIPTS/ccextractor
 
-cd $HS_SCRIPTS
-rm -rf hls-live-stats
-git clone https://github.com/pmendozav/hls-live-stats.git
-
-cd hls-live-stats
+cd $HS_SCRIPTS/hls-live-stats
 npm install
 
 OUTPUT=$(pwd)
