@@ -24,6 +24,7 @@ fi
 
 cd ../bin
 
+# create hs-live-tester script
 echo '#!/bin/sh' > hs-live-tester
 echo '' >> hs-live-tester
 
@@ -41,3 +42,11 @@ echo '' >> hs-live-tester
 echo 'open "http://localhost:3000/stats"' >> hs-live-tester
 
 chmod 777 hs-live-tester
+
+# create hs-cc-live-tester script
+echo '#!/bin/sh' > hs-cc-live-tester
+echo '' >> hs-cc-live-tester
+echo 'TIME="$1"' >> hs-cc-live-tester
+echo 'DATA_SOURCE="$2"' >> hs-cc-live-tester
+printf "node %s/hls-live-stats/checkCC.js \$TIME \$DATA_SOURCE\n" $HS_SCRIPTS >> hs-cc-live-tester
+chmod 777 hs-cc-live-tester

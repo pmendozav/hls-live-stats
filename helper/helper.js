@@ -66,6 +66,7 @@ const simpleParser = (data, host, originPath) => {
     const EOF = detectEOF(data);
     let lines = data.split(EOF);
     let contentDuration = 0;
+    let firstSegmentDuration = 0;
     let adsDuration = 0;
     let adMarkers = 0;
     let adFlag = 0;
@@ -120,6 +121,7 @@ const simpleParser = (data, host, originPath) => {
         if (match) {
             isMaster = false;
             const d = parseFloat(match[1]);
+            if (firstSegmentDuration === 0) firstSegmentDuration = d;
             contentDuration += d;
             if (adFlag > 0) adCounter += d;
             continue;
@@ -155,7 +157,8 @@ const simpleParser = (data, host, originPath) => {
         info: {
             adsDuration,
             adMarkers,
-            contentDuration
+            contentDuration,
+            firstSegmentDuration
         }
     };
 }

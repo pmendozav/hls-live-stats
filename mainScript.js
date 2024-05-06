@@ -40,7 +40,7 @@ async function run(sources, target, timeout) {
     try {
         let hsScriptsPath = await _exec(`echo $HS_SCRIPTS`);
         hsScriptsPath = hsScriptsPath.stdout.replace(/[\n\t\r]/g,"");
-        const serverPath = `${hsScriptsPath}/hls-live-stats/server.js`
+        const serverPath = `${hsScriptsPath}/server.js`
         spawn('node', [serverPath], {detached: true, stdio: [ 'ignore']});
     } catch (e) {
         console.log(e);
@@ -67,7 +67,10 @@ async function run(sources, target, timeout) {
     for (source of sources) {
         let id = source[0];
         let url = source[1];
-        if (!url) continue;
+        if (!url) {
+            count++;
+            continue;
+        }
         
         url = url.replace('http://', 'https://');
 
@@ -81,16 +84,16 @@ async function run(sources, target, timeout) {
                 console.log(`${new Date()}: all the result are located on ${target}\n- hls reports: ${reportResults}\n- server logs: ${target}/stats.json [http://localhost:3000/stats]`)
 
                 await getResults(false);
-                console.log(`${new Date()}: CMD=process.exit(1)`);
-                process.exit(1);
+                console.log(`${new Date()}: CMD=process.exit(0)`);
+                process.exit(0);
             }
         });
     }
 }
 
-const dataSource = process.argv[2];
-const target = process.argv[3];
-const time = process.argv[4];
+const dataSource = process.argv[2] || process.env.DATA_SOURCE;
+const target = process.argv[3] || process.env.TARGET;
+const time = process.argv[4] || process.env.TIME;
 
 const filepath = dataSource;
 (async () => {

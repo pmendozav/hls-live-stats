@@ -77,9 +77,20 @@ class Source {
                         responseType: 'arraybuffer'
                     })
                     .then(async response => {
-                        const fname = '/tmp/test.ts';
+                        const now = Date.now();
+                        const fname = `/tmp/${now}.ts`;
+                        const ccFname = `/tmp/${now}.srt`;
+                        
                         fs.writeFileSync(fname, Buffer.from(response.data));
-                        const result = await exec(`ccextractor -stdout ${fname}`)
+                        
+                        try {
+                            await exec(`rm /tmp/*.srt`);
+                        } catch (_) {
+                            // do nothing
+                        }
+
+                        const ccCmd = `ffmpeg -f lavfi -i "movie=${fname}[out0+subcc]" -map s "${ccFname}" && cat ${ccFname}`;
+                        const result = await exec(ccCmd)
                             .then((result) => result.stdout)
                             .catch(err => err.message);
 
